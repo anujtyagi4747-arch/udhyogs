@@ -518,3 +518,1229 @@ function filterCategory(category){
 </script>
 
 <!-- PART 2 IS PASTED BELOW THIS LINE -->
+<!-- =========================
+     PART 2/5 : PRODUCTS
+========================= -->
+
+<style>
+
+/* PRODUCTS */
+.products-section{
+  padding:10px 13px 30px;
+  background:#f7fff8;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+}
+
+.product-card{
+  background:#fff;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid #e2eee3;
+  box-shadow:0 5px 18px #174d1d0b;
+  position:relative;
+  transition:.25s;
+}
+
+.product-card:active{
+  transform:scale(.98);
+}
+
+.product-img{
+  height:165px;
+  background:#edf8ed;
+  position:relative;
+  overflow:hidden;
+}
+
+.product-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.product-tag{
+  position:absolute;
+  top:9px;
+  left:8px;
+  background:#087b32;
+  color:#fff;
+  padding:5px 8px;
+  border-radius:20px;
+  font-size:9px;
+  font-weight:800;
+}
+
+.quick-btn{
+  position:absolute;
+  right:8px;
+  top:8px;
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:50%;
+  background:#ffffffdd;
+  color:#087b32;
+  box-shadow:0 3px 10px #0002;
+}
+
+.product-info{
+  padding:11px;
+}
+
+.product-name{
+  color:#214f2b;
+  font-size:14px;
+  font-weight:800;
+  line-height:1.25;
+  min-height:35px;
+}
+
+.product-weight{
+  color:#78917c;
+  font-size:10px;
+  margin-top:5px;
+}
+
+.product-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:9px;
+  gap:5px;
+}
+
+.price{
+  color:#087b32;
+  font-size:16px;
+  font-weight:900;
+}
+
+.old-price{
+  color:#9ca99e;
+  font-size:10px;
+  text-decoration:line-through;
+  margin-left:3px;
+}
+
+.add-btn{
+  border:0;
+  background:#087b32;
+  color:white;
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.buy-btn{
+  width:100%;
+  border:0;
+  background:#e9f7eb;
+  color:#087b32;
+  border-radius:10px;
+  padding:9px 5px;
+  margin-top:9px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.empty-products{
+  display:none;
+  text-align:center;
+  padding:35px 10px;
+  color:#69816d;
+}
+
+/* PRODUCT POPUP */
+.product-popup{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  z-index:3000;
+  display:none;
+  align-items:flex-end;
+}
+
+.product-popup.active{
+  display:flex;
+}
+
+.product-popup-box{
+  background:#fff;
+  width:100%;
+  max-height:88vh;
+  overflow:auto;
+  border-radius:25px 25px 0 0;
+  padding:15px;
+  animation:slideUp .3s ease;
+}
+
+@keyframes slideUp{
+  from{
+    transform:translateY(100%);
+  }
+  to{
+    transform:translateY(0);
+  }
+}
+
+.popup-close{
+  float:right;
+  width:35px;
+  height:35px;
+  border:0;
+  border-radius:50%;
+  background:#edf7ee;
+  color:#087b32;
+  font-size:20px;
+}
+
+.popup-image{
+  width:100%;
+  height:230px;
+  margin-top:5px;
+  border-radius:18px;
+  overflow:hidden;
+  background:#eff9ef;
+}
+
+.popup-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.popup-title{
+  font-size:22px;
+  color:#075d29;
+  font-weight:900;
+  margin-top:15px;
+}
+
+.popup-desc{
+  color:#617463;
+  font-size:13px;
+  line-height:1.6;
+  margin-top:8px;
+}
+
+.popup-price{
+  font-size:22px;
+  font-weight:900;
+  color:#078334;
+  margin-top:13px;
+}
+
+.popup-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:15px;
+}
+
+.popup-actions button{
+  padding:13px 5px;
+  border:0;
+  border-radius:12px;
+  font-weight:800;
+}
+
+.popup-cart{
+  background:#e8f6ea;
+  color:#087b32;
+}
+
+.popup-whatsapp{
+  background:#18a64a;
+  color:white;
+}
+
+/* CART DRAWER */
+.cart-drawer{
+  position:fixed;
+  right:-100%;
+  top:0;
+  width:100%;
+  max-width:430px;
+  height:100vh;
+  background:#fff;
+  z-index:3500;
+  transition:.3s;
+  box-shadow:-5px 0 25px #0003;
+  display:flex;
+  flex-direction:column;
+}
+
+.cart-drawer.active{
+  right:0;
+}
+
+.cart-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:17px;
+  border-bottom:1px solid #e7eee7;
+}
+
+.cart-head h2{
+  color:#075d29;
+  font-size:20px;
+}
+
+.cart-close{
+  border:0;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:#edf7ee;
+  color:#087b32;
+  font-size:20px;
+}
+
+.cart-items{
+  flex:1;
+  overflow:auto;
+  padding:12px;
+}
+
+.cart-item{
+  display:flex;
+  gap:10px;
+  padding:10px;
+  border:1px solid #e5eee5;
+  border-radius:14px;
+  margin-bottom:10px;
+}
+
+.cart-item img{
+  width:70px;
+  height:70px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.cart-item-info{
+  flex:1;
+}
+
+.cart-item-name{
+  font-weight:800;
+  color:#285633;
+  font-size:13px;
+}
+
+.cart-item-price{
+  color:#087b32;
+  font-size:13px;
+  font-weight:900;
+  margin-top:5px;
+}
+
+.qty-row{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:7px;
+}
+
+.qty-btn{
+  width:26px;
+  height:26px;
+  border:0;
+  border-radius:7px;
+  background:#eaf6eb;
+  color:#087b32;
+  font-weight:bold;
+}
+
+.remove-btn{
+  border:0;
+  background:none;
+  color:#d33;
+  font-size:11px;
+  margin-left:5px;
+}
+
+.cart-bottom{
+  padding:15px;
+  border-top:1px solid #e5eee5;
+  background:#fff;
+}
+
+.cart-total{
+  display:flex;
+  justify-content:space-between;
+  font-size:18px;
+  font-weight:900;
+  color:#174e27;
+  margin-bottom:12px;
+}
+
+.checkout-btn{
+  width:100%;
+  border:0;
+  background:#18a64a;
+  color:#fff;
+  border-radius:13px;
+  padding:14px;
+  font-weight:900;
+}
+
+.empty-cart{
+  text-align:center;
+  padding:70px 20px;
+  color:#708274;
+}
+
+.empty-cart-icon{
+  font-size:45px;
+  margin-bottom:10px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  transform:translate(-50%,120px);
+  background:#173d22;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:30px;
+  z-index:5000;
+  font-size:12px;
+  font-weight:bold;
+  box-shadow:0 5px 20px #0004;
+  transition:.3s;
+  white-space:nowrap;
+}
+
+.toast.show{
+  transform:translate(-50%,0);
+}
+
+/* DESKTOP PRODUCT */
+@media(min-width:700px){
+  .product-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .product-img{
+    height:180px;
+  }
+}
+
+</style>
+
+
+<!-- PRODUCTS SECTION -->
+
+<section class="products-section" id="products">
+
+  <div class="section-head">
+
+    <h2>Our Products</h2>
+
+    <button
+      class="view-all"
+      onclick="showAllProducts()">
+      View All
+    </button>
+
+  </div>
+
+
+  <div class="product-grid" id="productGrid">
+
+
+    <!-- PRODUCT 1 -->
+
+    <div
+      class="product-card"
+      data-name="Multani Mitti"
+      data-category="powder">
+
+      <div class="product-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80"
+          alt="Multani Mitti">
+
+        <span class="product-tag">
+          NATURAL
+        </span>
+
+        <button
+          class="quick-btn"
+          onclick="quickView(0)">
+          👁
+        </button>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="product-name">
+          Multani Mitti
+        </div>
+
+        <div class="product-weight">
+          Pure Herbal Powder • 200g
+        </div>
+
+        <div class="product-bottom">
+
+          <div class="price">
+            ₹149
+            <span class="old-price">₹199</span>
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(0)">
+            +
+          </button>
+
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="quickView(0)">
+          View Details
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCT 2 -->
+
+    <div
+      class="product-card"
+      data-name="Tulasi Leaves Powder"
+      data-category="powder">
+
+      <div class="product-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=600&q=80"
+          alt="Tulasi Leaves Powder">
+
+        <span class="product-tag">
+          HERBAL
+        </span>
+
+        <button
+          class="quick-btn"
+          onclick="quickView(1)">
+          👁
+        </button>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="product-name">
+          Tulasi Leaves Powder
+        </div>
+
+        <div class="product-weight">
+          Immunity Support • 50g
+        </div>
+
+        <div class="product-bottom">
+
+          <div class="price">
+            ₹129
+            <span class="old-price">₹169</span>
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(1)">
+            +
+          </button>
+
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="quickView(1)">
+          View Details
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCT 3 -->
+
+    <div
+      class="product-card"
+      data-name="Arogya Churna"
+      data-category="powder">
+
+      <div class="product-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1603905179139-db12ab535a03?auto=format&fit=crop&w=600&q=80"
+          alt="Arogya Churna">
+
+        <span class="product-tag">
+          PURE
+        </span>
+
+        <button
+          class="quick-btn"
+          onclick="quickView(2)">
+          👁
+        </button>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="product-name">
+          Arogya Churna
+        </div>
+
+        <div class="product-weight">
+          Herbal Wellness • 250g
+        </div>
+
+        <div class="product-bottom">
+
+          <div class="price">
+            ₹199
+            <span class="old-price">₹249</span>
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(2)">
+            +
+          </button>
+
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="quickView(2)">
+          View Details
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCT 4 -->
+
+    <div
+      class="product-card"
+      data-name="Pachan Amrit"
+      data-category="wellness">
+
+      <div class="product-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1611073768599-8c5f7f8a7a5c?auto=format&fit=crop&w=600&q=80"
+          alt="Pachan Amrit">
+
+        <span class="product-tag">
+          WELLNESS
+        </span>
+
+        <button
+          class="quick-btn"
+          onclick="quickView(3)">
+          👁
+        </button>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="product-name">
+          Pachan Amrit
+        </div>
+
+        <div class="product-weight">
+          Digestive Wellness • 100g
+        </div>
+
+        <div class="product-bottom">
+
+          <div class="price">
+            ₹179
+            <span class="old-price">₹229</span>
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(3)">
+            +
+          </button>
+
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="quickView(3)">
+          View Details
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCT 5 -->
+
+    <div
+      class="product-card"
+      data-name="Rechak Churna"
+      data-category="powder">
+
+      <div class="product-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=600&q=80"
+          alt="Rechak Churna">
+
+        <span class="product-tag">
+          HERBAL
+        </span>
+
+        <button
+          class="quick-btn"
+          onclick="quickView(4)">
+          👁
+        </button>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="product-name">
+          Rechak Churna
+        </div>
+
+        <div class="product-weight">
+          Herbal Churna • 100g
+        </div>
+
+        <div class="product-bottom">
+
+          <div class="price">
+            ₹169
+            <span class="old-price">₹219</span>
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(4)">
+            +
+          </button>
+
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="quickView(4)">
+          View Details
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCT 6 -->
+
+    <div
+      class="product-card"
+      data-name="Sabja Seeds"
+      data-category="seeds">
+
+      <div class="product-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1601055903647-dd8bcb6d6d3e?auto=format&fit=crop&w=600&q=80"
+          alt="Sabja Seeds">
+
+        <span class="product-tag">
+          SUPERFOOD
+        </span>
+
+        <button
+          class="quick-btn"
+          onclick="quickView(5)">
+          👁
+        </button>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="product-name">
+          Sabja Seeds
+        </div>
+
+        <div class="product-weight">
+          Basil Seeds • 200g
+        </div>
+
+        <div class="product-bottom">
+
+          <div class="price">
+            ₹159
+            <span class="old-price">₹199</span>
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(5)">
+            +
+          </button>
+
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="quickView(5)">
+          View Details
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCT 7 -->
+
+    <div
+      class="product-card"
+      data-name="Epsom Salt"
+      data-category="wellness">
+
+      <div class="product-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80"
+          alt="Epsom Salt">
+
+        <span class="product-tag">
+          NATURAL
+        </span>
+
+        <button
+          class="quick-btn"
+          onclick="quickView(6)">
+          👁
+        </button>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="product-name">
+          Epsom Salt
+        </div>
+
+        <div class="product-weight">
+          Pure Magnesium Salt • 200g
+        </div>
+
+        <div class="product-bottom">
+
+          <div class="price">
+            ₹139
+            <span class="old-price">₹179</span>
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(6)">
+            +
+          </button>
+
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="quickView(6)">
+          View Details
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PRODUCT 8 -->
+
+    <div
+      class="product-card"
+      data-name="Virgin Coconut Oil"
+      data-category="oil">
+
+      <div class="product-img">
+
+        <img
+          src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80"
+          alt="Virgin Coconut Oil">
+
+        <span class="product-tag">
+          NATURAL OIL
+        </span>
+
+        <button
+          class="quick-btn"
+          onclick="quickView(7)">
+          👁
+        </button>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="product-name">
+          Virgin Coconut Oil
+        </div>
+
+        <div class="product-weight">
+          Cold Pressed • 100ml
+        </div>
+
+        <div class="product-bottom">
+
+          <div class="price">
+            ₹199
+            <span class="old-price">₹249</span>
+          </div>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(7)">
+            +
+          </button>
+
+        </div>
+
+        <button
+          class="buy-btn"
+          onclick="quickView(7)">
+          View Details
+        </button>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+  <div
+    class="empty-products"
+    id="emptyProducts">
+
+    🌿
+    <br><br>
+    No products found.
+    <br>
+    Try another search.
+
+  </div>
+
+</section>
+
+
+<!-- QUICK VIEW POPUP -->
+
+<div
+  class="product-popup"
+  id="productPopup"
+  onclick="closeQuickView(event)">
+
+  <div
+    class="product-popup-box"
+    onclick="event.stopPropagation()">
+
+    <button
+      class="popup-close"
+      onclick="closePopup()">
+      ×
+    </button>
+
+    <div class="popup-image">
+
+      <img
+        id="popupImg"
+        src=""
+        alt="Product">
+
+    </div>
+
+    <div
+      class="popup-title"
+      id="popupTitle">
+      Product
+    </div>
+
+    <div
+      class="popup-desc"
+      id="popupDesc">
+      Pure natural herbal product.
+    </div>
+
+    <div
+      class="popup-price"
+      id="popupPrice">
+      ₹0
+    </div>
+
+    <div class="popup-actions">
+
+      <button
+        class="popup-cart"
+        id="popupCartBtn">
+        🛒 Add to Cart
+      </button>
+
+      <button
+        class="popup-whatsapp"
+        id="popupWhatsappBtn">
+        WhatsApp Order
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- CART -->
+
+<div
+  class="cart-drawer"
+  id="cartDrawer">
+
+  <div class="cart-head">
+
+    <h2>🛒 My Cart</h2>
+
+    <button
+      class="cart-close"
+      onclick="closeCart()">
+      ×
+    </button>
+
+  </div>
+
+
+  <div
+    class="cart-items"
+    id="cartItems">
+
+    <div class="empty-cart">
+
+      <div class="empty-cart-icon">
+        🛒
+      </div>
+
+      Your cart is empty.
+
+      <br><br>
+
+      Add some natural products.
+
+    </div>
+
+  </div>
+
+
+  <div class="cart-bottom">
+
+    <div class="cart-total">
+
+      <span>Total</span>
+
+      <span id="cartTotal">
+        ₹0
+      </span>
+
+    </div>
+
+    <button
+      class="checkout-btn"
+      onclick="checkoutWhatsApp()">
+
+      💬 Order on WhatsApp
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+  class="toast"
+  id="toast">
+  Product added to cart
+</div>
+
+
+<script>
+
+/* =========================
+   PRODUCT DATA
+========================= */
+
+const products = [
+
+  {
+    name:"Multani Mitti",
+    price:149,
+    oldPrice:199,
+    weight:"200g",
+    category:"powder",
+    image:"https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80",
+    desc:"Pure natural Multani Mitti powder suitable for traditional skincare routines."
+  },
+
+  {
+    name:"Tulasi Leaves Powder",
+    price:129,
+    oldPrice:169,
+    weight:"50g",
+    category:"powder",
+    image:"https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=600&q=80",
+    desc:"Naturally sourced Tulasi leaves powder."
+  },
+
+  {
+    name:"Arogya Churna",
+    price:199,
+    oldPrice:249,
+    weight:"250g",
+    category:"powder",
+    image:"https://images.unsplash.com/photo-1603905179139-db12ab535a03?auto=format&fit=crop&w=600&q=80",
+    desc:"A traditional herbal churna prepared from selected natural ingredients."
+  },
+
+  {
+    name:"Pachan Amrit",
+    price:179,
+    oldPrice:229,
+    weight:"100g",
+    category:"wellness",
+    image:"https://images.unsplash.com/photo-1611073768599-8c5f7f8a7a5c?auto=format&fit=crop&w=600&q=80",
+    desc:"Herbal wellness product made with naturally sourced ingredients."
+  },
+
+  {
+    name:"Rechak Churna",
+    price:169,
+    oldPrice:219,
+    weight:"100g",
+    category:"powder",
+    image:"https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&w=600&q=80",
+    desc:"Traditional herbal powder."
+  },
+
+  {
+    name:"Sabja Seeds",
+    price:159,
+    oldPrice:199,
+    weight:"200g",
+    category:"seeds",
+    image:"https://images.unsplash.com/photo-1601055903647-dd8bcb6d6d3e?auto=format&fit=crop&w=600&q=80",
+    desc:"Natural basil seeds, a popular traditional superfood."
+  },
+
+  {
+    name:"Epsom Salt",
+    price:139,
+    oldPrice:179,
+    weight:"200g",
+    category:"wellness",
+    image:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80",
+    desc:"Pure Epsom salt for wellness and personal-care routines."
+  },
+
+  {
+    name:"Virgin Coconut Oil",
+    price:199,
+    oldPrice:249,
+    weight:"100ml",
+    category:"oil",
+    image:"https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80",
+    desc:"Natural virgin coconut oil."
+  }
+
+];
+
+
+/* =========================
+   CART DATA
+========================= */
+
+let cart = [];
+
+let selectedProduct = null;
+
+
+/* =========================
+   ADD CART
+========================= */
+
+function addToCart(index){
+
+  const product = products[index];
+
+  const existing = cart.find(
+    item => item.name === product.name
+  );
+
+  if(existing){
+
+    existing.qty += 1;
+
+  }else{
+
+    cart.push({
+      ...product,
+      qty:1
+    });
+
+  }
+
+  updateCart();
+
+  showToast(
+    product.name + " added to cart"
+  );
+}
+
+
+/* =========================
+   UPDATE CART
+========================= */
+
+funct
