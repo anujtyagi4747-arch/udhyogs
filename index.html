@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#087b32">
+<title>Nature's Udyog | Natural & Herbal Products</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f7fff8;
+  color:#173d22;
+  overflow-x:hidden;
+}
+button,input{
+  font:inherit;
+}
+button{
+  cursor:pointer;
+}
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+/* HEADER */
+.header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:#fff;
+  box-shadow:0 2px 15px #0002;
+}
+.topbar{
+  height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:7px 13px;
+}
+.menu-btn,
+.cart-btn{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:12px;
+  background:#eff9f0;
+  color:#087b32;
+  font-size:23px;
+}
+.logo{
+  text-align:center;
+  flex:1;
+  padding:0 7px;
+}
+.logo-mark{
+  font-size:28px;
+  line-height:25px;
+}
+.logo-name{
+  color:#07812f;
+  font-size:16px;
+  font-weight:900;
+  letter-spacing:.3px;
+}
+.logo-name span{
+  color:#e21f25;
+}
+.since{
+  color:#176b30;
+  font-size:9px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
+/* SEARCH */
+.search-box{
+  padding:5px 12px 12px;
+  background:#fff;
+}
+.search{
+  height:46px;
+  display:flex;
+  align-items:center;
+  border:1px solid #d7e9d8;
+  border-radius:13px;
+  overflow:hidden;
+  background:#fafefa;
+}
+.search input{
+  flex:1;
+  border:0;
+  outline:0;
+  background:transparent;
+  padding:0 14px;
+  color:#24552f;
+}
+.search button{
+  width:52px;
+  height:46px;
+  border:0;
+  background:#078334;
+  color:white;
+  font-size:20px;
+}
+
+/* SIDE MENU */
+.side-menu{
+  position:fixed;
+  left:-280px;
+  top:0;
+  width:270px;
+  height:100vh;
+  background:white;
+  z-index:2000;
+  padding:25px 20px;
+  box-shadow:5px 0 20px #0003;
+  transition:.3s;
+}
+.side-menu.active{
+  left:0;
+}
+.side-title{
+  color:#087b32;
+  font-size:21px;
+  font-weight:900;
+  margin-bottom:25px;
+}
+.side-menu a{
+  display:block;
+  padding:14px 5px;
+  border-bottom:1px solid #e8f1e8;
+  font-weight:bold;
+  color:#315b39;
+}
+.close-menu{
+  float:right;
+  border:0;
+  background:#eaf7ec;
+  color:#087b32;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+}
+
+/* OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:#0007;
+  z-index:1500;
+  display:none;
+}
+.overlay.active{
+  display:block;
+}
+
+/* HERO */
+.hero{
+  margin:0;
+  min-height:390px;
+  padding:35px 22px 25px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(115deg,#efffe9eF,#d9f7d7d9),
+    url("https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=900&q=80");
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
+}
+.hero:after{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  right:-70px;
+  bottom:-60px;
+  background:#49a93c33;
+  border-radius:50%;
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:340px;
+}
+.badge{
+  display:inline-block;
+  background:#087b32;
+  color:#fff;
+  padding:7px 12px;
+  border-radius:30px;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:14px;
+}
+.hero h1{
+  font-size:34px;
+  line-height:1.05;
+  color:#075d29;
+  margin-bottom:13px;
+  font-weight:900;
+}
+.hero h1 span{
+  color:#12913b;
+}
+.hero p{
+  color:#385a3c;
+  line-height:1.5;
+  font-size:14px;
+  margin-bottom:20px;
+}
+.shop-btn{
+  border:0;
+  background:#087b32;
+  color:#fff;
+  border-radius:30px;
+  padding:13px 22px;
+  font-weight:800;
+  box-shadow:0 7px 18px #087b3240;
+}
+.shop-btn span{
+  margin-left:8px;
+}
+
+/* TRUST */
+.trust{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#fff;
+  padding:18px 10px;
+  gap:12px;
+}
+.trust-item{
+  text-align:center;
+  padding:10px 4px;
+}
+.trust-icon{
+  width:48px;
+  height:48px;
+  margin:auto auto 7px;
+  border:2px solid #4aaf52;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#087b32;
+  font-size:22px;
+}
+.trust b{
+  display:block;
+  font-size:12px;
+  color:#305637;
+}
+
+/* SECTION */
+.section{
+  padding:25px 13px;
+}
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+.section-head h2{
+  color:#075d29;
+  font-size:21px;
+}
+.view-all{
+  border:0;
+  background:none;
+  color:#078334;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* CATEGORIES */
+.categories{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding-bottom:8px;
+  scrollbar-width:none;
+}
+.categories::-webkit-scrollbar{
+  display:none;
+}
+.category{
+  min-width:105px;
+  background:white;
+  border:1px solid #e0eee1;
+  border-radius:16px;
+  padding:15px 8px;
+  text-align:center;
+  box-shadow:0 3px 12px #164d1b0b;
+}
+.category-icon{
+  width:53px;
+  height:53px;
+  margin:auto auto 8px;
+  background:#edf9ed;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+}
+.category b{
+  display:block;
+  font-size:11px;
+  color:#315b39;
+  line-height:1.3;
+}
+
+/* MOBILE */
+@media(min-width:700px){
+  body{
+    max-width:480px;
+    margin:auto;
+    box-shadow:0 0 30px #0002;
+    min-height:100vh;
+  }
+  .hero{
+    min-height:430px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDE MENU -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="side-menu" id="sideMenu">
+  <button class="close-menu" onclick="closeMenu()">×</button>
+  <div class="side-title">🌿 Nature's Udyog</div>
+
+  <a href="#home" onclick="closeMenu()">🏠 Home</a>
+  <a href="#products" onclick="closeMenu()">🛍️ Products</a>
+  <a href="#categories" onclick="closeMenu()">🌿 Categories</a>
+  <a href="#about" onclick="closeMenu()">ℹ️ About Us</a>
+  <a href="#contact" onclick="closeMenu()">📞 Contact</a>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+
+  <div class="topbar">
+
+    <button class="menu-btn" onclick="openMenu()">☰</button>
+
+    <div class="logo">
+      <div class="logo-mark">🌿</div>
+      <div class="logo-name">
+        NATURE'S <span>UDYOG</span>
+      </div>
+      <div class="since">SINCE 2008</div>
+    </div>
+
+    <button class="cart-btn" onclick="openCart()">
+      🛒
+    </button>
+
+  </div>
+
+  <div class="search-box">
+    <div class="search">
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search products..."
+        oninput="searchProducts()"
+      >
+      <button onclick="searchProducts()">🔍</button>
+    </div>
+  </div>
+
+</header>
+
+<!-- HOME -->
+<main id="home">
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="badge">
+      🌿 PURE • NATURAL • CHEMICAL FREE
+    </div>
+
+    <h1>
+      Nature's Goodness
+      <span>for a Healthier Tomorrow</span>
+    </h1>
+
+    <p>
+      Herbal & Natural Products
+      for your complete wellness.
+      Choose nature. Choose healthy living.
+    </p>
+
+    <button class="shop-btn" onclick="goProducts()">
+      🛒 Shop Now <span>›</span>
+    </button>
+
+  </div>
+
+</section>
+
+<!-- TRUST -->
+<section class="trust">
+
+  <div class="trust-item">
+    <div class="trust-icon">🌿</div>
+    <b>100% Natural</b>
+  </div>
+
+  <div class="trust-item">
+    <div class="trust-icon">🧪</div>
+    <b>Chemical Free</b>
+  </div>
+
+  <div class="trust-item">
+    <div class="trust-icon">⭐</div>
+    <b>Premium Quality</b>
+  </div>
+
+  <div class="trust-item">
+    <div class="trust-icon">🍃</div>
+    <b>Healthy Lifestyle</b>
+  </div>
+
+</section>
+
+<!-- CATEGORIES -->
+<section class="section" id="categories">
+
+  <div class="section-head">
+    <h2>Shop by Category</h2>
+    <button class="view-all" onclick="goProducts()">View All</button>
+  </div>
+
+  <div class="categories">
+
+    <div class="category" onclick="filterCategory('powder')">
+      <div class="category-icon">🌿</div>
+      <b>Herbal Powders</b>
+    </div>
+
+    <div class="category" onclick="filterCategory('food')">
+      <div class="category-icon">🥗</div>
+      <b>Health Foods</b>
+    </div>
+
+    <div class="category" onclick="filterCategory('oil')">
+      <div class="category-icon">🫒</div>
+      <b>Natural Oils</b>
+    </div>
+
+    <div class="category" onclick="filterCategory('seeds')">
+      <div class="category-icon">🌱</div>
+      <b>Seeds & Superfoods</b>
+    </div>
+
+    <div class="category" onclick="filterCategory('wellness')">
+      <div class="category-icon">🍃</div>
+      <b>Wellness</b>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<script>
+function openMenu(){
+  document.getElementById("sideMenu").classList.add("active");
+  document.getElementById("overlay").classList.add("active");
+}
+
+function closeMenu(){
+  document.getElementById("sideMenu").classList.remove("active");
+  document.getElementById("overlay").classList.remove("active");
+}
+
+function goProducts(){
+  location.hash="products";
+}
+
+function openCart(){
+  alert("Your cart will open in Part 4.");
+}
+
+function searchProducts(){
+  const value=document.getElementById("searchInput").value.toLowerCase();
+  console.log("Searching:",value);
+}
+
+function filterCategory(category){
+  location.hash="products";
+  console.log("Category:",category);
+}
+</script>
+
+<!-- PART 2 IS PASTED BELOW THIS LINE -->
